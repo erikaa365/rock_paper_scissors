@@ -15,11 +15,15 @@
             return list[Math.floor(Math.random()*list.length)];
         }
 
-        const computerSelection = computerPLay();
-        const playerSelection = prompt('Enter rock, paper or scissors').toLowerCase();
+        let playerSelection;
+        let computerSelection;
         let result;
+        let scorePlayer = 0;
+        let scoreComputer = 0;
 
         function playRound(playerSelection, computerSelection){
+            playerSelection = prompt('Enter rock, paper or scissors').toLowerCase();
+            computerSelection = computerPLay();
 
             if(playerSelection === 'rock'){
                 if(computerSelection === 'Rock'){
@@ -60,8 +64,21 @@
 
             alert(result);
         }
+
+        function game(){
+            for (let i = 0; i < 5; i++) {
+                playRound(playerSelection, computerSelection);
+                if(result.includes("win")){
+                    scorePlayer += 1;
+                }
+                else if(result.includes("lose")){
+                    scoreComputer +=1;
+                }
+            }
+            alert(`Computers score is ${scoreComputer} and your score is ${scorePlayer}`);
+        }
         
-        playRound(playerSelection, computerSelection);
+        game();
         console.log(computerSelection, playerSelection, result);
         
     </script>
