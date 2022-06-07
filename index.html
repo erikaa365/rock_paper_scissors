@@ -17,13 +17,54 @@
 
         const computerSelection = computerPLay();
         const playerSelection = prompt('Enter rock, paper or scissors').toLowerCase();
+        let result;
+            
+        
         
 
-        function game(playerSelection, computerSelection){
-            
+        function playRound(playerSelection, computerSelection){
+
+            if(playerSelection === 'rock'){
+                if(computerSelection === 'Rock'){
+                    result = "It's a draw";
+                }
+                else if(computerSelection === 'Paper'){
+                    result = "You lose! Paper beats rock.";
+                }
+                else{
+                    result = "You win! Rock beats scissors.";
+                }
+            }
+
+            else if(playerSelection === 'paper'){
+                if(computerSelection === 'Rock'){
+                    result = "You win! Paper beats rock.";
+                }
+                else if(computerSelection === 'Paper'){
+                    result = "It's a draw";
+                }
+                else{
+                    result = "You lose! Scissors beat paper.";
+                }
+
+            }
+
+            else{
+                if(computerSelection === 'Rock'){
+                    result = "You lose! Rock beats scissors.";
+                }
+                else if(computerSelection === 'Paper'){
+                    result = "You win! Scissors beat paper";
+                }
+                else{
+                    result = "It's a draw";
+                }
+            }
         }
         
-        console.log(computerSelection, playerSelection);
+        playRound();
+        console.log(computerSelection, playerSelection, result);
+        
     </script>
 
 </body>
