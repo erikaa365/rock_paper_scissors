@@ -8,76 +8,67 @@
 </head>
 <body>
     
+    <button id="rock">Rock</button>
+    <button id="paper">Paper</button>
+    <button id="scissors">Scissors</button>
+
+    <div id="results"></div>
+
 
     <script>
         function computerPLay(){
-            let list = ['Rock', 'Paper', 'Scissors']; 
+            let list = ['rock', 'paper', 'scissors']; 
             return list[Math.floor(Math.random()*list.length)];
         }
 
         let playerSelection;
         let computerSelection;
-        let result;
         let scorePlayer = 0;
         let scoreComputer = 0;
 
-        function playRound(playerSelection, computerSelection){
-            playerSelection = prompt('Enter rock, paper or scissors').toLowerCase();
+        const btns = [...document.querySelectorAll('button')];
+        btns.forEach(item => {
+            item.addEventListener('click', function(){
+                playRound(item.getAttribute('id'));
+            });
+        });
+        
+        function playRound(playerSelection){ 
+            console.log(playerSelection);
             computerSelection = computerPLay();
+            let result = ""
 
-            if(playerSelection === 'rock'){
-                if(computerSelection === 'Rock'){
-                    result = "It's a draw";
-                }
-                else if(computerSelection === 'Paper'){
-                    result = "You lose! Paper beats rock.";
-                }
-                else if(computerSelection === 'Scissors'){
-                    result = "You win! Rock beats scissors.";
-                }
+            if(playerSelection == computerSelection){
+                result = "It's a draw! You both picked: " + playerSelection;
             }
 
-            else if(playerSelection === 'paper'){
-                if(computerSelection === 'Rock'){
-                    result = "You win! Paper beats rock.";
-                }
-                else if(computerSelection === 'Paper'){
-                    result = "It's a draw";
-                }
-                else if(computerSelection === 'Scissors'){
-                    result = "You lose! Scissors beat paper.";
-                }
-
+            else if((playerSelection == 'rock' && computerSelection == 'scissors')
+                || (playerSelection == 'paper' && computerSelection == 'rock')
+                || (playerSelection == 'scissors' && computerSelection == 'paper')){
+                    scorePlayer += 1;
+                    playerSelection = playerSelection.charAt(0).toUpperCase() + playerSelection.slice(1);
+                    result = `You win. ${playerSelection} beats ${computerSelection}.`
+                    }
+            
+            else {
+                scoreComputer += 1;
+                computerSelection = computerSelection.charAt(0).toUpperCase() + computerSelection.slice(1);
+                result = `You lose. ${computerSelection} beats ${playerSelection}.`;
             }
 
-            else if(playerSelection === 'scissors'){
-                if(computerSelection === 'Rock'){
-                    result = "You lose! Rock beats scissors.";
-                }
-                else if(computerSelection === 'Paper'){
-                    result = "You win! Scissors beat paper";
-                }
-                else if(computerSelection === 'Scissors'){
-                    result = "It's a draw";
-                }
-            }
-
-            else{
-                alert('Error. Wrong input.');
-            }
-
-            if(result){alert(result);}
+            alert(result);
         }
 
+
         function game(){
-            for (let i = 0; i < 5; i++) {
-                playRound(playerSelection, computerSelection);
-                if(result.includes("win")){
-                    scorePlayer += 1;
-                }
-                else if(result.includes("lose")){
-                    scoreComputer +=1;
-                }
+
+
+            playRound(playerSelection, computerSelection);
+            if(result.includes("win")){
+                scorePlayer += 1;
+            }
+            else if(result.includes("lose")){
+                scoreComputer +=1;
             }
             alert(`Computers score is ${scoreComputer} and your score is ${scorePlayer}`);
         }
