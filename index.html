@@ -12,7 +12,9 @@
     <button id="paper">Paper</button>
     <button id="scissors">Scissors</button>
 
+    <div id="result"></div>
     <div id="score"></div>
+    <div id="winner"></div>
 
 
     <script>
@@ -34,14 +36,13 @@
         });
         
         function playRound(playerSelection){ 
-            console.log(playerSelection);
             computerSelection = computerPLay();
-            let result = ""
+            let result = "";
 
             if(playerSelection == computerSelection){
-                result = ("It's a draw! You both picked: " + playerSelection + 
-                            "\n Computer score: " + scoreComputer + 
-                            "\n Your score: " + scorePlayer);
+                result = "It's a draw! You both picked: " + playerSelection;
+                score = "Computer score: " + scoreComputer + 
+                            "<br> Your score: " + scorePlayer;
             }
 
             else if((playerSelection == 'rock' && computerSelection == 'scissors')
@@ -49,25 +50,39 @@
                 || (playerSelection == 'scissors' && computerSelection == 'paper')){
                     scorePlayer += 1;
                     playerSelection = playerSelection.charAt(0).toUpperCase() + playerSelection.slice(1);
-                    result = (`You win. ${playerSelection} beats ${computerSelection}.` + 
-                            "\n Computer score: " + scoreComputer + 
-                            "\n Your score: " + scorePlayer);
+                    result = `You win. ${playerSelection} beats ${computerSelection}.`;
+                    score = "Computer score: " + scoreComputer + 
+                            "<br> Your score: " + scorePlayer;        
                     }
             
             else {
                 scoreComputer += 1;
                 computerSelection = computerSelection.charAt(0).toUpperCase() + computerSelection.slice(1);
-                result = (`You lose. ${computerSelection} beats ${playerSelection}.`+ 
-                            "\n Computer score: " + scoreComputer + 
-                            "\n Your score: " + scorePlayer);
+                result = `You lose. ${computerSelection} beats ${playerSelection}.`;
+                score = "Computer score: " + scoreComputer + 
+                            "<br> Your score: " + scorePlayer;
             }
             
-            document.getElementById('score').innerHTML = result;
+            document.getElementById('result').innerHTML = result;
+            document.getElementById('score').innerHTML = score;
+
+            if(scoreComputer == 5){
+                document.getElementById('winner').innerHTML = 'Game over. You lost.';
+                scoreComputer = 0;
+                scorePlayer = 0;
+            }
+            else if(scorePlayer == 5){
+                document.getElementById('winner').innerHTML = 'Game over. You won!';
+                scoreComputer = 0;
+                scorePlayer = 0;
+            }
+            else{
+                document.getElementById('winner').innerHTML = '';
+            }
           
                 
         }
 
-        console.log(scoreComputer, scorePlayer)
 
         
         
